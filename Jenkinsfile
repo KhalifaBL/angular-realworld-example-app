@@ -1,18 +1,11 @@
 pipeline {
     agent any
-    environment {
-        GIT_LATEST_COMMIT_EDITOR= sh(
-            returnStdout:true,
-            script: 'git show -s --pretty=%cn '
-        ).trim()
-        HOME = '.'
-	  }
 
 
     stages {
         stage ('Show commit author') {
             steps {
-                sh "echo '${env.GIT_LATEST_COMMIT_EDITOR}'"
+                sh "echo 'Hello from Khalifa!'"
             }
         }
         stage ('Execute CI pipeline') {
