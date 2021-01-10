@@ -1,7 +1,20 @@
 pipeline {
     agent any
+    environment {
+        GIT_LATEST_COMMIT_EDITOR= sh(
+            returnStdout:true,
+            script: 'git show -s --pretty=%cn '
+        ).trim()
+        HOME = '.'
+	  }
+
 
     stages {
+        stage ('Show commit author') {
+            steps {
+                sh "echo '${env.GIT_LATEST_COMMIT_EDITOR}'"
+            }
+        }
         stage ('Execute CI pipeline') {
             agent {
                 docker { image 'node:12-buster-slim' }
