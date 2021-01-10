@@ -1,14 +1,18 @@
 pipeline {
+    agent any
+
+    stages {
+        stage ('Execute CI pipeline') {
             agent {
                 docker { image 'node:12-buster-slim' }
             }
             stages{
-                stage ('Build'){
+                stage ('npm install'){
                     steps {
                         sh "npm install"
                     }
                 }
-                stage('Prod'){
+                stage('NPM build'){
                     steps {
                         sh 'npm run-script build --prod'
                     }
@@ -20,5 +24,7 @@ pipeline {
                         archiveArtifacts "**/*.tar.gz"
                     }
                 }
+            }
+        }
     }
 }
